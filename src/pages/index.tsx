@@ -14,8 +14,8 @@ const Home: NextPage = () => {
   const [amount, setAmount] = useState(1)
   const switchChain = useSwitchChain()
   const isMismatched = useNetworkMismatch()
-  const nameProjet = "Warstore Collection"  // Nome do seu Projeto
-  const { contract } = useContract("0xC36e9F4E8bfAFd462DD2C8d834e23618cB81839d") // Endereço da sua Coleção    
+  const nameProjet = "Warstore NFT Collection"  // Nome do seu Projeto
+  const { contract } = useContract("0x82C381d8e8A26b5C260665db2d1B97B5a253c5d9") // Endereço da sua Coleção    
 
   //const [nfts, setNFTs] = useState('');
   async function getDataTokens(){
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
 
         <div className={styles.walletContainer}>
           { address && isMismatched ?
-            <button onClick={ () => switchChain(ChainId.Mumbai)} className={styles.btnChain}>Switch Chain</button>
+            <button onClick={ () => switchChain(ChainId.Polygon)} className={styles.btnChain}>Switch Chain</button>
           : 
             <ConnectWallet modalTitle="Connect Wallet | Login" btnTitle='Connect Wallet&nbsp;&nbsp;|&nbsp;&nbsp;Login' className={styles.btn}  />
           }
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
                 :
                 <>
             {nfts.map(token => {
-              if(token.metadata.id>1){
+              if(token.metadata.id>1 && token.metadata.id !=7){
                 return(
                   <div className={styles.claimContainer} key={token.metadata.id}>
               
