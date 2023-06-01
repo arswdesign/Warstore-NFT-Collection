@@ -18,14 +18,14 @@ const Home: NextPage = () => {
   const { contract } = useContract("0x82C381d8e8A26b5C260665db2d1B97B5a253c5d9") // Endereço da sua Coleção    
 
   //const [nfts, setNFTs] = useState('');
-  async function getDataTokens(){
+  async function GetDataTokens(){
       const { data: nftsGet, isLoading, error } = useNFTs(contract);
       return nftsGet;
   }
 
   
   const [nfts, setNFTs] = useState('');
-  const getData = getDataTokens()
+  const getData = GetDataTokens()
   if(loading){
     {getData.then(res => {
       if(res){
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     })}
   }
 
-  async function totalMinted(token){
+  async function TotalMinted(token){
     const data = await (await contract)?.call("totalSupply", [token])
     .then(function(myValue: any){
       const minted = myValue.toString()
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 
   }
 
-  async function claim(token){
+  async function Claim(token){
     
     setLoadingMint(token)
 
@@ -67,7 +67,7 @@ const Home: NextPage = () => {
     const tx = await contract?.erc1155.claim(token, amount)
     .then(function(myValue: any){
       const receipt = myValue 
-      totalMinted(token)
+      TotalMinted(token)
       toast.success(`Congrats! Your NFT was minted successfuly.`)
 
     }).catch(function(error: any){
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
                         </div> 
                       </div>
                       :
-                        <button className={styles.btnMint} onClick={() => claim(token.metadata.id) }>Mint Now</button>
+                        <button className={styles.btnMint} onClick={() => Claim(token.metadata.id) }>Mint Now</button>
                       }
                       </div>
                     </div>
