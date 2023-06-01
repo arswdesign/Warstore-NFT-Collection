@@ -23,7 +23,7 @@ export default function Home(){
   }
 
   
-  const [nfts, setNFTs] = useState('');
+  const [nfts, setNFTs] = useState< null | undefine>('');
   const getData = GetDataTokens()
   if(loading){
     {getData.then(res => {
