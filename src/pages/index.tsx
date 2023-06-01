@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         if(loading){
           setNFTs(res);
           setLoading(false)
-          console.log(nfts)
+          //console.log(nfts)
         }
       }
     })}
@@ -44,11 +44,11 @@ const Home: NextPage = () => {
       const minted = myValue.toString()
       setMinted(myValue)
       document.getElementById("p"+token).innerHTML = minted+" Minted"
-      console.log("total:"+minted)
+      //console.log("total:"+minted)
 
 
     }).catch(function(error: any){
-      console.log(error)
+      //console.log(error)
     })
 
   }
@@ -71,7 +71,7 @@ const Home: NextPage = () => {
       toast.success(`Congrats! Your NFT was minted successfuly.`)
 
     }).catch(function(error: any){
-      console.log(error)
+      //console.log(error)
       toast.error("Ops! We can't mint your NFT")
     })
     setLoadingMint(false)
