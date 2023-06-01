@@ -22,8 +22,15 @@ export default function Home(){
       return nftsGet;
   }
 
+  type NFTData = {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    supply: number;
+  }
   
-  const [nfts, setNFTs] = useState< null | undefine>('');
+  const [nfts, setNFTs] = useState< NFTData  | null>(null);
   const getData = GetDataTokens()
   if(loading){
     {getData.then(res => {
