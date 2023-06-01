@@ -49,17 +49,25 @@ export default function Home(){
   GetDataTokens()
 
   async function TotalMinted(token:any){
-    const data = await (await contract)?.call("totalSupply", [token])
-    .then(function(myValue: any){
-      const minted = myValue.toString()
-      setMinted(myValue)
-      document.getElementById("p"+token).innerHTML = minted+" Minted"
-      //console.log("total:"+minted)
+    //var par = document.getElementById("p"+token);
+
+    const par = document.getElementById(
+      "p"+token,
+    ) as HTMLElement | null;
+    
+    if(par){
+      const data = await (await contract)?.call("totalSupply", [token])
+      .then(function(myValue: any){
+        const minted = myValue.toString()
+        setMinted(myValue)
+        par.innerHTML = minted+" Minted"
+        //console.log("total:"+minted)
 
 
-    }).catch(function(error: any){
-      //console.log(error)
-    })
+      }).catch(function(error: any){
+        //console.log(error)
+      })
+    }
 
   }
 
@@ -82,6 +90,7 @@ export default function Home(){
 
     }).catch(function(error: any){
       //console.log(error)
+      TotalMinted(token)
       toast.error("Ops! We can't mint your NFT")
     })
     setLoadingMint(null)
@@ -115,7 +124,7 @@ export default function Home(){
                   </div> 
                 :
                 <>
-            {nfts.map(token => {
+            {nfts.map((token:any,index:any) => {
               if(token.metadata.id>1 && token.metadata.id !=7){
                 return(
                   <div className={styles.claimContainer} key={token.metadata.id}>
