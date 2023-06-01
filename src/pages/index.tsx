@@ -5,8 +5,7 @@ import { ConnectWallet, useAddress, useSwitchChain, useNetworkMismatch, ChainId,
 import { toast } from 'react-toastify'
 import { NextPageContext } from 'next'
 
-const Home: NextPage = () => {
-  
+export default function Home(){
   const address = useAddress()
   const [loading, setLoading] = useState(true)
   const [loadingMint, setLoadingMint] = useState(false)
@@ -150,4 +149,3 @@ const Home: NextPage = () => {
     </div>
   )
 }
-export default Home;
