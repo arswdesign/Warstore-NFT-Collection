@@ -8,41 +8,45 @@ import { NextPageContext } from 'next'
 export default function Home(){
   const address = useAddress()
   const [loading, setLoading] = useState(true)
-  const [loadingMint, setLoadingMint] = useState(false)
+  const [loadingMint, setLoadingMint] = useState(null)
   const [minted, setMinted] = useState(0)
   const [amount, setAmount] = useState(1)
   const switchChain = useSwitchChain()
   const isMismatched = useNetworkMismatch()
   const nameProjet = "Warstore NFT Collection"  // Nome do seu Projeto
   const { contract } = useContract("0x82C381d8e8A26b5C260665db2d1B97B5a253c5d9") // Endereço da sua Coleção    
-
-  //const [nfts, setNFTs] = useState('');
-  async function GetDataTokens(){
-      const { data: nftsGet, isLoading, error } = useNFTs(contract);
-      return nftsGet;
-  }
-
-  type NFTData = {
+  
+  type Metadata = {
     id: number;
     name: string;
     description: string;
     image: string;
-    supply: number;
   }
-  
-  const [nfts, setNFTs] = useState< NFTData  | null>(null);
-  const getData = GetDataTokens()
-  if(loading){
-    {getData.then(res => {
-      if(res){
-        if(loading){
-          setNFTs(res);
+
+  type NFTData = {
+    owner: string;
+    metadata: Metadata;
+    type: string;
+    supply: number;  
+  }
+
+
+  const [nfts, setNFTs] = useState<unknown>([])
+  async function GetDataTokens(){
+      const { data: nftsGet, isLoading, error } = useNFTs(contract);
+
+      if(loading){    
+        if(nftsGet){
+          setNFTs(nftsGet);
           setLoading(false)
-          //console.log(nfts)
+          console.log(nftsGet)
         }
       }
-    })}
+
+      //return nftsGet;
   }
+
+  GetDataTokens()
 
   async function TotalMinted(token){
     const data = await (await contract)?.call("totalSupply", [token])
@@ -65,7 +69,7 @@ export default function Home(){
 
     if(!address){
       toast.error('Connect your wallet')
-      setLoadingMint(false)
+      setLoadingMint(null)
       return
     }
 
@@ -80,7 +84,7 @@ export default function Home(){
       //console.log(error)
       toast.error("Ops! We can't mint your NFT")
     })
-    setLoadingMint(false)
+    setLoadingMint(null)
   }
   return (
     <div className={styles.container}>
@@ -103,7 +107,7 @@ export default function Home(){
         </div>
         <div className={styles.mainGrid}>
           
-          {!nfts?
+          {loading?
                   <div className={styles.loading}>
                     <svg className={styles.spinner} width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
                       <circle className={styles.path} fill="none" strokeWidth="6" strokeLinecap="round" cx="33" cy="33" r="30"></circle>
