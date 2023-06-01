@@ -31,7 +31,7 @@ export default function Home(){
   }
 
 
-  const [nfts, setNFTs] = useState<unknown>([])
+  const [nfts, setNFTs] = useState<any>([])
   async function GetDataTokens(){
       const { data: nftsGet, isLoading, error } = useNFTs(contract);
 
@@ -48,7 +48,7 @@ export default function Home(){
 
   GetDataTokens()
 
-  async function TotalMinted(token){
+  async function TotalMinted(token:any){
     const data = await (await contract)?.call("totalSupply", [token])
     .then(function(myValue: any){
       const minted = myValue.toString()
@@ -63,7 +63,7 @@ export default function Home(){
 
   }
 
-  async function Claim(token){
+  async function Claim(token:any){
     
     setLoadingMint(token)
 
